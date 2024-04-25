@@ -43,3 +43,12 @@ class ProductService:
         product["_id"] = str(product["_id"])
         self.__redis_client.set(f"product:{product_id}", json.dumps(product), 3600)
         return True, "Product found", product
+    
+    def get_product_listing(self) -> Tuple[bool, str, dict | None]:
+        # Get a list of 20 random products from DB
+        success, products = self.__db_client.find("products", {}, num_rec=20)
+        if not success:
+            return False, "No products found", None
+        for product in products:
+            product["_id"] = str(product["_id"])
+        return True, "Products found", products

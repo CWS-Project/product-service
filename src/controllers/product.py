@@ -24,6 +24,11 @@ def search_product(response: Response, q: Annotated[str, Query()] = "", s_type: 
     _, msg, data = product_service.search_product(q, s_type)
     return make_response(response, 200, msg, data)
 
+@router.get("/listing")
+def get_product_listing(response: Response):
+    _, msg, data = product_service.get_product_listing()
+    return make_response(response, 200, msg, data)
+
 @router.get("/{product_id}")
 def get_product(product_id: str, response: Response):
     success, msg, data = product_service.get_product(product_id)
